@@ -40,6 +40,11 @@ INSTALLED_APPS = (
 
     # 3rd party apps
     'rest_framework',
+    'webpack_loader',
+
+    # Internal apps
+    'base',
+    'employee',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -104,3 +109,14 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'client'),
+)
+
+WEBPACK_LOADER = {
+    'DEFAULT': {
+        'BUNDLE_DIR_NAME': 'dist/',
+        'STATS_FILE': os.path.join(BASE_DIR, 'webpack-stats.json')
+    }
+}

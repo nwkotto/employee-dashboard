@@ -1,5 +1,12 @@
-run:
+all: run
+
+run: watch-client runserver
+
+runserver:
 	python manage.py runserver
+
+watch-client:
+	npm run watch &
 
 build: requirements collectstatic migrate
 
