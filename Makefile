@@ -19,7 +19,7 @@ collectstatic:
 migrate:
 	python manage.py migrate
 
-makemigrations:
+migrations:
 	python manage.py makemigrations
 
 shell:
