@@ -24,3 +24,6 @@ migrations:
 
 shell:
 	python manage.py shell
+
+superuser:
+	python manage.py createsuperuser
