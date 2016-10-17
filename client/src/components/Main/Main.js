@@ -4,7 +4,7 @@ import 'bootstrap/dist/js/bootstrap.min.js';
 import './Main.css';
 import ObjectList from '../ObjectList/ObjectList.js';
 
-const Main = () => (
+const Main = ({ employer }) => (
   <div>
     <nav className="navbar navbar-inverse navbar-fixed-top">
       <div className="container-fluid">
@@ -15,7 +15,7 @@ const Main = () => (
             <span className="icon-bar"></span>
             <span className="icon-bar"></span>
           </button>
-          <a className="navbar-brand" href="#">Project name</a>
+          <a className="navbar-brand" href="#">{employer.name}</a>
         </div>
         <div id="navbar" className="navbar-collapse collapse">
           <ul className="nav navbar-nav navbar-right">

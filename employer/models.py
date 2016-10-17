@@ -15,3 +15,6 @@ class EmployerAdminAccount(models.Model):
         primary_key=True
     )
 	employer = models.ForeignKey(Employer)
+
+	def __str__(self):
+		return "{0} - {1}".format(self.user, self.employer)

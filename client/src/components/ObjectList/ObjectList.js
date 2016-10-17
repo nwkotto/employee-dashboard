@@ -9,6 +9,8 @@ export const DELETE_OBJECT = "DELETE_OBJECT";
 export const CREATE_OBJECT = "CREATE_OBJECT";
 export const OBJECT_DELETE_ERROR = "OBJECT_DELETE_ERROR";
 export const OBJECT_CREATE_ERROR = "OBJECT_CREATION_ERROR";
+export const REQUEST_STARTED = 'REQUEST_STARTED';
+export const REQUEST_FINISHED = 'REQUEST_FINISHED';
 
 // Reducer
 
@@ -30,6 +32,7 @@ export const reducer = (state = [], action) => {
 
 const deleteObject = (id) => {
   return (dispatch) => {
+    dispatch({type: REQUEST_STARTED})
     $.ajax({
         url: `/api/employees/${id}`,
         type: 'DELETE',
@@ -41,10 +44,13 @@ const deleteObject = (id) => {
           });
         },
         error: function(err) {
-          dipatch({
+          dispatch({
             type: OBJECT_DELETE_ERROR
           })
-        }  
+        },
+        complete: function() {
+          dispatch({type: REQUEST_FINISHED})
+        }
     });
   }
 };
@@ -53,7 +59,7 @@ const deleteObject = (id) => {
 
 let ObjectList = ({ objs, onDeleteClick }) => {
   let rows = objs.map((val) => (
-    <tr>
+    <tr key={`object-list-item-${val.id}`}>
       <td>{val.full_name}</td>
       <td>{val.email}</td>
       <td>{val.hire_date}</td>
@@ -85,7 +91,7 @@ let ObjectList = ({ objs, onDeleteClick }) => {
 // Connect
 
 const mapStateToProps = (state) => ({
-  objectList: state.objectList
+  objs: state.objectList
 });
 
 ObjectList = connect(
