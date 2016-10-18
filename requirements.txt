@@ -5,4 +5,5 @@ django-webpack-loader==0.3.3
 djangorestframework==3.4.7
 gunicorn==19.6.0
 Markdown==2.6.7
+psycopg2==2.6.2
 whitenoise==3.2.2
