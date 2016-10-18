@@ -10,15 +10,15 @@ let ObjectListInlineForm = ({ onSubmit, handleSubmit }) => (
     <h2>Create a New Employee</h2>
     <div className="form-group">
       <label htmlFor="employee-first">First Name *</label>
-      <Field name="first_name" component="input" type="text" placeholder="Nick" className="form-control" id="employee-first" required="required"/>
+      <Field name="first_name" component="input" type="text" placeholder="Jon" className="form-control" id="employee-first" required="required"/>
     </div>
     <div className="form-group">
       <label htmlFor="employee-last">Last Name *</label>
-      <Field name="last_name" component="input" type="text" placeholder="Otto" className="form-control" id="employee-last" required="required"/>
+      <Field name="last_name" component="input" type="text" placeholder="Snow" className="form-control" id="employee-last" required="required"/>
     </div>
     <div className="form-group">
       <label htmlFor="employee-email">Email *</label>
-      <Field name="email" component="input" type="email" placeholder="notto.webdev@gmail.com" className="form-control" id="employee-email" required="required"/>
+      <Field name="email" component="input" type="email" placeholder="jon.snow@winterfell.com" className="form-control" id="employee-email" required="required"/>
     </div>
     <div className="form-group">
       <label htmlFor="employee-hire">Hire Date</label>
