@@ -58,14 +58,14 @@ const deleteObject = (id) => {
 
 // Component
 
-let ObjectList = ({ objs, onDeleteClick }) => {
+let ObjectList = ({ objs, onDeleteClick, updating }) => {
   let rows = objs.map((val) => (
     <Tr key={`object-list-item-${val.id}`}>
         <Td column="Full Name" data={`${val.first_name} ${val.last_name}`}>{`${val.first_name} ${val.last_name}`}</Td>
         <Td column="Email" data={val.email}>{val.email}</Td>
         <Td column="Hire Date" data={val.hire_date}>{val.hire_date}</Td>
         <Td column="Delete">
-          <button className="btn btn-danger" onClick={onDeleteClick.bind(null, val.id)}>Delete</button>
+          <button className="btn btn-danger" onClick={onDeleteClick.bind(null, val.id)} disabled={updating}>Delete</button>
         </Td>
     </Tr>
   ));
@@ -95,7 +95,8 @@ let ObjectList = ({ objs, onDeleteClick }) => {
 // Connect
 
 const mapStateToProps = (state) => ({
-  objs: state.objectList
+  objs: state.objectList,
+  updating: state.updating
 });
 
 ObjectList = connect(

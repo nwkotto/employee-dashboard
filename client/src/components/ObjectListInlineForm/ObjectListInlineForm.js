@@ -5,24 +5,24 @@ import { CREATE_OBJECT, OBJECT_CREATE_ERROR, REQUEST_STARTED, REQUEST_FINISHED }
 
 const FORM_NAME = 'createEmployee';
 
-let ObjectListInlineForm = ({ onSubmit, handleSubmit }) => (
+let ObjectListInlineForm = ({ onSubmit, handleSubmit, updating }) => (
   <form onSubmit={handleSubmit(onSubmit)}>
     <h2>Create a New Employee</h2>
     <div className="form-group">
       <label htmlFor="employee-first">First Name *</label>
-      <Field name="first_name" component="input" type="text" placeholder="Jon" className="form-control" id="employee-first" required="required"/>
+      <Field name="first_name" component="input" type="text" placeholder="Jon" className="form-control" id="employee-first" required="required" disabled={updating}/>
     </div>
     <div className="form-group">
       <label htmlFor="employee-last">Last Name *</label>
-      <Field name="last_name" component="input" type="text" placeholder="Snow" className="form-control" id="employee-last" required="required"/>
+      <Field name="last_name" component="input" type="text" placeholder="Snow" className="form-control" id="employee-last" required="required" disabled={updating}/>
     </div>
     <div className="form-group">
       <label htmlFor="employee-email">Email *</label>
-      <Field name="email" component="input" type="email" placeholder="jon.snow@winterfell.com" className="form-control" id="employee-email" required="required"/>
+      <Field name="email" component="input" type="email" placeholder="jon.snow@winterfell.com" className="form-control" id="employee-email" required="required" disabled={updating}/>
     </div>
     <div className="form-group">
       <label htmlFor="employee-hire">Hire Date</label>
-      <Field name="hire_date" component="input" type="date" className="form-control" id="employee-hire"/>
+      <Field name="hire_date" component="input" type="date" className="form-control" id="employee-hire" disabled={updating}/>
     </div>
     <button className="btn btn-default" type="submit">Submit</button>
   </form>
@@ -42,7 +42,8 @@ export const createUserWithForm = (form) => {
             dispatch(reset(form));
             dispatch({
               type: CREATE_OBJECT,
-              ...values
+              id: result.id,
+              ...values,
             });
           },
           error: function(err) {
@@ -61,7 +62,8 @@ export const createUserWithForm = (form) => {
 // Connect
 
 const mapStateToProps = (state) => ({
-  initialValues: {employer: state.employer.id}
+  initialValues: {employer: state.employer.id},
+  updating: state.updating
 })
 
 ObjectListInlineForm = connect(

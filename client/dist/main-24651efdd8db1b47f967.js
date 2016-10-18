@@ -48693,6 +48693,7 @@
 	var ObjectList = function ObjectList(_ref) {
 	  var objs = _ref.objs;
 	  var onDeleteClick = _ref.onDeleteClick;
+	  var updating = _ref.updating;
 
 	  var rows = objs.map(function (val) {
 	    return _react2.default.createElement(
@@ -48718,7 +48719,7 @@
 	        { column: 'Delete' },
 	        _react2.default.createElement(
 	          'button',
-	          { className: 'btn btn-danger', onClick: onDeleteClick.bind(null, val.id) },
+	          { className: 'btn btn-danger', onClick: onDeleteClick.bind(null, val.id), disabled: updating },
 	          'Delete'
 	        )
 	      )
@@ -48749,7 +48750,8 @@
 
 	var mapStateToProps = function mapStateToProps(state) {
 	  return {
-	    objs: state.objectList
+	    objs: state.objectList,
+	    updating: state.updating
 	  };
 	};
 
@@ -50438,6 +50440,7 @@
 	var ObjectListInlineForm = function ObjectListInlineForm(_ref) {
 	  var onSubmit = _ref.onSubmit;
 	  var handleSubmit = _ref.handleSubmit;
+	  var updating = _ref.updating;
 	  return _react2.default.createElement(
 	    'form',
 	    { onSubmit: handleSubmit(onSubmit) },
@@ -50454,7 +50457,7 @@
 	        { htmlFor: 'employee-first' },
 	        'First Name *'
 	      ),
-	      _react2.default.createElement(_reduxForm.Field, { name: 'first_name', component: 'input', type: 'text', placeholder: 'Jon', className: 'form-control', id: 'employee-first', required: 'required' })
+	      _react2.default.createElement(_reduxForm.Field, { name: 'first_name', component: 'input', type: 'text', placeholder: 'Jon', className: 'form-control', id: 'employee-first', required: 'required', disabled: updating })
 	    ),
 	    _react2.default.createElement(
 	      'div',
@@ -50464,7 +50467,7 @@
 	        { htmlFor: 'employee-last' },
 	        'Last Name *'
 	      ),
-	      _react2.default.createElement(_reduxForm.Field, { name: 'last_name', component: 'input', type: 'text', placeholder: 'Snow', className: 'form-control', id: 'employee-last', required: 'required' })
+	      _react2.default.createElement(_reduxForm.Field, { name: 'last_name', component: 'input', type: 'text', placeholder: 'Snow', className: 'form-control', id: 'employee-last', required: 'required', disabled: updating })
 	    ),
 	    _react2.default.createElement(
 	      'div',
@@ -50474,7 +50477,7 @@
 	        { htmlFor: 'employee-email' },
 	        'Email *'
 	      ),
-	      _react2.default.createElement(_reduxForm.Field, { name: 'email', component: 'input', type: 'email', placeholder: 'jon.snow@winterfell.com', className: 'form-control', id: 'employee-email', required: 'required' })
+	      _react2.default.createElement(_reduxForm.Field, { name: 'email', component: 'input', type: 'email', placeholder: 'jon.snow@winterfell.com', className: 'form-control', id: 'employee-email', required: 'required', disabled: updating })
 	    ),
 	    _react2.default.createElement(
 	      'div',
@@ -50484,7 +50487,7 @@
 	        { htmlFor: 'employee-hire' },
 	        'Hire Date'
 	      ),
-	      _react2.default.createElement(_reduxForm.Field, { name: 'hire_date', component: 'input', type: 'date', className: 'form-control', id: 'employee-hire' })
+	      _react2.default.createElement(_reduxForm.Field, { name: 'hire_date', component: 'input', type: 'date', className: 'form-control', id: 'employee-hire', disabled: updating })
 	    ),
 	    _react2.default.createElement(
 	      'button',
@@ -50507,7 +50510,8 @@
 	        success: function success(result) {
 	          dispatch((0, _reduxForm.reset)(form));
 	          dispatch(_extends({
-	            type: _ObjectList.CREATE_OBJECT
+	            type: _ObjectList.CREATE_OBJECT,
+	            id: result.id
 	          }, values));
 	        },
 	        error: function error(err) {
@@ -50527,7 +50531,8 @@
 
 	var mapStateToProps = function mapStateToProps(state) {
 	  return {
-	    initialValues: { employer: state.employer.id }
+	    initialValues: { employer: state.employer.id },
+	    updating: state.updating
 	  };
 	};
 
