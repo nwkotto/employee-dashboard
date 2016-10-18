@@ -18,8 +18,8 @@ export const REQUEST_FINISHED = 'REQUEST_FINISHED';
 export const reducer = (state = [], action) => {
   switch (action.type) {
     case CREATE_OBJECT:
-      let { id, name, email, hire_date } = action;
-      return state.concat([{ id, name, email, hire_date }]);
+      let { id, first_name, last_name, email, hire_date } = action;
+      return state.concat([{ id, first_name, last_name, email, hire_date }]);
 
     case DELETE_OBJECT:
       return state.filter((val) => (val.id !== action.id));
@@ -61,7 +61,7 @@ const deleteObject = (id) => {
 let ObjectList = ({ objs, onDeleteClick }) => {
   let rows = objs.map((val) => (
     <Tr key={`object-list-item-${val.id}`}>
-        <Td column="Full Name" data={val.full_name}>{val.full_name}</Td>
+        <Td column="Full Name" data={`${val.first_name} ${val.last_name}`}>{`${val.first_name} ${val.last_name}`}</Td>
         <Td column="Email" data={val.email}>{val.email}</Td>
         <Td column="Hire Date" data={val.hire_date}>{val.hire_date}</Td>
         <Td column="Delete">

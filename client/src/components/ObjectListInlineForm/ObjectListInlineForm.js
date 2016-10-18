@@ -1,7 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Field, reduxForm } from 'redux-form';
+import { Field, reduxForm, reset } from 'redux-form';
 import { CREATE_OBJECT, OBJECT_CREATE_ERROR, REQUEST_STARTED, REQUEST_FINISHED } from '../ObjectList/ObjectList';
+
+const FORM_NAME = 'createEmployee';
 
 let ObjectListInlineForm = ({ onSubmit, handleSubmit }) => (
   <form onSubmit={handleSubmit(onSubmit)}>
@@ -28,31 +30,33 @@ let ObjectListInlineForm = ({ onSubmit, handleSubmit }) => (
 
 // Actions
 
-export const createUser = (values) => {
-  return (dispatch) => {
-    dispatch({type: REQUEST_STARTED})
-    $.ajax({
-        url: `/api/employees/`,
-        type: 'POST',
-        data: values,
-        success: function(result) {
-          // Do something with the result
-          dispatch({
-            type: CREATE_OBJECT,
-            ...values
-          });
-        },
-        error: function(err) {
-          dispatch({
-            type: OBJECT_CREATE_ERROR
-          })
-        },
-        complete: function() {
-          dispatch({type: REQUEST_FINISHED})
-        }
-    });
-  }
-};
+export const createUserWithForm = (form) => {
+  return (values) => {
+    return (dispatch) => {
+      dispatch({type: REQUEST_STARTED})
+      $.ajax({
+          url: `/api/employees/`,
+          type: 'POST',
+          data: values,
+          success: function(result) {
+            dispatch(reset(form));
+            dispatch({
+              type: CREATE_OBJECT,
+              ...values
+            });
+          },
+          error: function(err) {
+            dispatch({
+              type: OBJECT_CREATE_ERROR
+            })
+          },
+          complete: function() {
+            dispatch({type: REQUEST_FINISHED})
+          }
+      });
+    }
+  };
+}
 
 // Connect
 
@@ -62,9 +66,9 @@ const mapStateToProps = (state) => ({
 
 ObjectListInlineForm = connect(
   mapStateToProps,
-  { onSubmit: createUser }
+  { onSubmit: createUserWithForm(FORM_NAME) }
 )(reduxForm({
-  form: 'createEmployee'
+  form: FORM_NAME
 })(ObjectListInlineForm));
 
 export default ObjectListInlineForm;
