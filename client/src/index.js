@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Router, Route, Redirect, browserHistory } from 'react-router';
 import { Provider } from 'react-redux';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
@@ -56,11 +57,19 @@ const updating = (state = false, action) => {
   }
 }
 
+const employer = (state = {id:-1, name:'N/A'}, action) => {
+  switch (action.type) {
+    default:
+      return state;
+  }
+}
+
 const reducers = {
   objectList,
   form,
   err,
-  updating
+  updating,
+  employer
 }
 const reducer = combineReducers(reducers)
 
@@ -72,17 +81,21 @@ $.when(employerQuery, employeeQuery)
   .then((employers, employees) => {
     employers = employers[0],
     employees = employees[0];
-    let employer = employers[0] || 'Anon'
     const store = createStore(
       reducer,
       {
-        objectList: employees
+        objectList: employees,
+        employer: employers[0]
       },
       applyMiddleware(thunk));
 
     var App = () => (
         <Provider store={store}>
-            <Main employer={employer} />
+          <Router history={browserHistory}>
+            <Route path="/employees" component={Main}/>
+            <Redirect from="/:anything" to="/employees"/>
+            <Redirect from="/" to="/employees"/>
+          </Router>
         </Provider>
     )
 

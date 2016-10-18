@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Table, Tr, Td, Tfoot } from 'reactable'
 
 import ObjectListInlineForm from '../ObjectListInlineForm/ObjectListInlineForm';
 
@@ -59,31 +60,34 @@ const deleteObject = (id) => {
 
 let ObjectList = ({ objs, onDeleteClick }) => {
   let rows = objs.map((val) => (
-    <tr key={`object-list-item-${val.id}`}>
-      <td>{val.full_name}</td>
-      <td>{val.email}</td>
-      <td>{val.hire_date}</td>
-      <td>
-        <button className="btn btn-danger" onClick={onDeleteClick.bind(null, val.id)}>Delete</button>
-      </td>
-    </tr>
+    <Tr key={`object-list-item-${val.id}`}>
+        <Td column="Full Name" data={val.full_name}>{val.full_name}</Td>
+        <Td column="Email" data={val.email}>{val.email}</Td>
+        <Td column="Hire Date" data={val.hire_date}>{val.hire_date}</Td>
+        <Td column="Delete">
+          <button className="btn btn-danger" onClick={onDeleteClick.bind(null, val.id)}>Delete</button>
+        </Td>
+    </Tr>
   ));
   return (
     <div className="table-responsive">
-      <table className="table table-striped">
-        <thead>
-          <tr>
-            <th>Full Name</th>
-            <th>Email</th>
-            <th>Hire Date</th>
-            <th>Remove?</th>
-          </tr>
-        </thead>
-        <tbody>
-          {rows}
-          <ObjectListInlineForm />
-        </tbody>
-      </table>
+      <Table className="table table-striped" id="table" sortable={[
+          {
+              column: 'Full Name',
+              sortFunction: function(a, b){
+                  // Sort by last name
+                  var nameA = a.split(' ');
+                  var nameB = b.split(' ');
+
+                  return nameA[1].localeCompare(nameB[1]);
+              }
+          },
+          'Email',
+          'Hire Date'
+      ]}>
+        {rows}
+      </Table>
+      <ObjectListInlineForm />
     </div>
   )
 }

@@ -1,10 +1,11 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
 import './Main.css';
 import ObjectList from '../ObjectList/ObjectList.js';
 
-const Main = ({ employer }) => (
+let Main = ({ employer, params }) => (
   <div>
     <nav className="navbar navbar-inverse navbar-fixed-top">
       <div className="container-fluid">
@@ -34,11 +35,20 @@ const Main = ({ employer }) => (
         </div>
         <div className="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <h1 className="page-header">Employees</h1>
-          <ObjectList objs={[]} />
+          <ObjectList />
         </div>
       </div>
     </div>
   </div>
 )
+
+const mapStateToProps = (state) => ({
+  employer: state.employer
+})
+
+Main = connect(
+  mapStateToProps,
+  null
+)(Main);
 
 export default Main;
